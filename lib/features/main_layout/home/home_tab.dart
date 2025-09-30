@@ -5,6 +5,7 @@ import 'package:evently_hti_sun/core/widgets/event_item.dart';
 import 'package:evently_hti_sun/l10n/app_localizations.dart';
 import 'package:evently_hti_sun/models/category_model.dart';
 import 'package:evently_hti_sun/models/event_model.dart' show EventModel;
+import 'package:evently_hti_sun/models/user_model.dart';
 import 'package:evently_hti_sun/providers/language_provider.dart';
 import 'package:evently_hti_sun/providers/theme_provider.dart';
 import 'package:flutter/material.dart';
@@ -57,7 +58,7 @@ class _HomeTabState extends State<HomeTab> {
                           .headlineSmall,
                     ),
                     Text(
-                      "Muhammed Saad ✨",
+                      "${UserModel.currentUser!.name} ✨",
                       style: Theme
                           .of(context)
                           .textTheme

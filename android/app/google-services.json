@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "896013131474",
+    "project_id": "evently-hti-sun",
+    "storage_bucket": "evently-hti-sun.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:896013131474:android:9364b6e3754ba9ec29570b",
+        "android_client_info": {
+          "package_name": "com.example.evently_hti_sun"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmqt6kMA036BkLC47eWYOTN7G9w6AuRZw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

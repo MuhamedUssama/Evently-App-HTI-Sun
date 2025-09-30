@@ -1,11 +1,16 @@
 import 'package:evently_hti_sun/core/resources/assets_manager.dart';
 import 'package:evently_hti_sun/core/resources/colors_manager.dart';
+import 'package:evently_hti_sun/core/resources/constant_manager.dart';
 import 'package:evently_hti_sun/core/resources/routes_manager.dart';
+import 'package:evently_hti_sun/core/utils/UI_Utils.dart';
 import 'package:evently_hti_sun/core/utils/validation_utils.dart';
 import 'package:evently_hti_sun/core/widgets/custom_elevated_button.dart';
 import 'package:evently_hti_sun/core/widgets/custom_text_button.dart';
 import 'package:evently_hti_sun/core/widgets/custom_text_form_field.dart';
+import 'package:evently_hti_sun/firebase/firebase_service.dart';
 import 'package:evently_hti_sun/l10n/app_localizations.dart';
+import 'package:evently_hti_sun/models/user_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -20,11 +25,15 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   bool securePassword = true;
   bool secureRePassword = true;
-  late TextEditingController nameController ;
+  late TextEditingController nameController;
+
   late TextEditingController emailController;
-  late TextEditingController passwordController ;
-  late TextEditingController rePasswordController ;
+  late TextEditingController passwordController;
+
+  late TextEditingController rePasswordController;
+
   var formKey = GlobalKey<FormState>();
+
   @override
   void initState() {
     // TODO: implement initState
@@ -47,8 +56,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-AppLocalizations? appLocalizations = AppLocalizations.of(context);
+    AppLocalizations? appLocalizations = AppLocalizations.of(context);
     return Scaffold(
       appBar: AppBar(title: Text(appLocalizations!.register)),
       body: Padding(
@@ -59,7 +67,11 @@ AppLocalizations? appLocalizations = AppLocalizations.of(context);
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Image.asset(ImageAssets.eventlyLogo, width: 136.w, height: 186.h),
+                Image.asset(
+                  ImageAssets.eventlyLogo,
+                  width: 136.w,
+                  height: 186.h,
+                ),
                 SizedBox(height: 24.h),
                 CustomTextFormField(
                   controller: nameController,
@@ -67,9 +79,7 @@ AppLocalizations? appLocalizations = AppLocalizations.of(context);
                     if (input == null || input.trim().isEmpty) {
                       return "Name is required";
                     }
-                    if (input.length < 4) {
-                      return "Name must be at least 4 chars";
-                    }
+
                     return null;
                   },
                   labelText: appLocalizations.name,
@@ -94,10 +104,10 @@ AppLocalizations? appLocalizations = AppLocalizations.of(context);
                 CustomTextFormField(
                   controller: passwordController,
                   validator: (input) {
-                    if(input == null || input.trim().isEmpty){
+                    if (input == null || input.trim().isEmpty) {
                       return "Password is required";
                     }
-                    if(input.length < 6){
+                    if (input.length < 6) {
                       return "Password must be at least 6 chars";
                     }
                     return null;
@@ -119,10 +129,10 @@ AppLocalizations? appLocalizations = AppLocalizations.of(context);
                 CustomTextFormField(
                   controller: rePasswordController,
                   validator: (input) {
-                    if(input == null || input.trim().isEmpty){
+                    if (input == null || input.trim().isEmpty) {
                       return "Plz confirm password";
                     }
-                    if(input != passwordController.text){
+                    if (input != passwordController.text) {
                       return "Password doesn't match";
                     }
                     return null;
@@ -136,25 +146,36 @@ AppLocalizations? appLocalizations = AppLocalizations.of(context);
                       setState(() {});
                     },
                     icon: Icon(
-                      secureRePassword ? Icons.visibility_off : Icons.visibility,
+                      secureRePassword
+                          ? Icons.visibility_off
+                          : Icons.visibility,
                     ),
                   ),
                 ),
                 SizedBox(height: 16.h),
                 CustomElevatedButton(
-                  text:appLocalizations.create_account,
+                  text: appLocalizations.create_account,
                   onPress: _createAccount,
                 ),
-                SizedBox(height: 16.h,),
+                SizedBox(height: 16.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("${appLocalizations.already_have_account}? ", style: Theme.of(context).textTheme.bodySmall,),
-                    CustomTextButton(text: appLocalizations.login, onTap: (){
-                      Navigator.pushReplacementNamed(context, RoutesManager.login);
-                    })
+                    Text(
+                      "${appLocalizations.already_have_account}? ",
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                    CustomTextButton(
+                      text: appLocalizations.login,
+                      onTap: () {
+                        Navigator.pushReplacementNamed(
+                          context,
+                          RoutesManager.login,
+                        );
+                      },
+                    ),
                   ],
-                )
+                ),
               ],
             ),
           ),
@@ -163,9 +184,34 @@ AppLocalizations? appLocalizations = AppLocalizations.of(context);
     );
   }
 
-  void _createAccount() {
-    if(formKey.currentState?.validate() == false)return;
-    /// step1 -> check form is valid or not
-    print("email created successfully");
+  void _createAccount() async {
+    if (formKey.currentState?.validate() == false) return;
+
+    try {
+      UIUtils.showLoadingDialog(context);
+      UserCredential credential = await FirebaseService.register(
+        emailController.text,
+        passwordController.text,
+      );
+      await FirebaseService.addUserToFirestore(
+        UserModel(
+          id: credential.user!.uid,
+          name: nameController.text,
+          email: emailController.text,
+        ),
+      );
+      UIUtils.hideDialog(context);
+      Navigator.pushReplacementNamed(context, RoutesManager.login);
+    } on FirebaseAuthException catch (exception) {
+      UIUtils.hideDialog(context);
+      if (exception.code == FirebaseConstants.weakPasswordCode) {
+        UIUtils.showMessage(context, FirebaseConstants.weakPasswordMessage);
+      } else if (exception.code == FirebaseConstants.emailInUseCode) {
+        UIUtils.showMessage(context, FirebaseConstants.emailInUseMessage);
+      }
+    } catch (exception) {
+      UIUtils.hideDialog(context);
+      UIUtils.showMessage(context, FirebaseConstants.failedToRegisterMessage);
+    }
   }
 }

@@ -1,11 +1,16 @@
 import 'package:evently_hti_sun/core/resources/assets_manager.dart';
 import 'package:evently_hti_sun/core/resources/colors_manager.dart';
+import 'package:evently_hti_sun/core/resources/constant_manager.dart';
 import 'package:evently_hti_sun/core/resources/routes_manager.dart';
+import 'package:evently_hti_sun/core/utils/UI_Utils.dart';
 import 'package:evently_hti_sun/core/utils/validation_utils.dart';
 import 'package:evently_hti_sun/core/widgets/custom_elevated_button.dart';
 import 'package:evently_hti_sun/core/widgets/custom_text_button.dart';
 import 'package:evently_hti_sun/core/widgets/custom_text_form_field.dart';
+import 'package:evently_hti_sun/firebase/firebase_service.dart';
 import 'package:evently_hti_sun/l10n/app_localizations.dart';
+import 'package:evently_hti_sun/models/user_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -27,9 +32,20 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    //navigate();
     emailController = TextEditingController();
     passwordController = TextEditingController();
+
+
   }
+
+
+  // navigate()async{
+  //   if(FirebaseAuth.instance.currentUser != null){
+  //     UserModel.currentUser =await  FirebaseService.getUserFromFirestore(FirebaseAuth.instance.currentUser!.uid);
+  //     Navigator.pushReplacementNamed(context, RoutesManager.mainLayout);
+  //   }
+  // }
 
   @override
   void dispose() {
@@ -45,14 +61,21 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 12, vertical: MediaQuery.of(context).viewInsets.top),
+        padding: EdgeInsets.symmetric(
+          horizontal: 12,
+          vertical: MediaQuery.of(context).viewInsets.top,
+        ),
         child: Form(
           key: formKey,
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Image.asset(ImageAssets.eventlyLogo, width: 136.w, height: 186.h),
+                Image.asset(
+                  ImageAssets.eventlyLogo,
+                  width: 136.w,
+                  height: 186.h,
+                ),
                 SizedBox(height: 24.h),
                 CustomTextFormField(
                   labelText: appLocalizations!.email,
@@ -100,12 +123,18 @@ class _LoginScreenState extends State<LoginScreen> {
                   onTap: () {},
                 ),
                 SizedBox(height: 24.h),
-                CustomElevatedButton(text: appLocalizations.login,onPress:  login),
+                CustomElevatedButton(
+                  text: appLocalizations.login,
+                  onPress: login,
+                ),
                 SizedBox(height: 24.h),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("${appLocalizations.dont_have_account} ? ", style: Theme.of(context).textTheme.bodySmall,),
+                    Text(
+                      "${appLocalizations.dont_have_account} ? ",
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
                     CustomTextButton(
                       text: appLocalizations.create_account,
                       onTap: () {
@@ -141,13 +170,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 SizedBox(height: 16.h),
                 OutlinedButton(
-            
                   style: OutlinedButton.styleFrom(
                     padding: REdgeInsets.symmetric(vertical: 16),
                     side: BorderSide(color: ColorsManager.blue),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16.r)
-                    )
+                      borderRadius: BorderRadius.circular(16.r),
+                    ),
                   ),
                   onPressed: () {},
                   child: Row(
@@ -174,7 +202,22 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  void login() {
-    if(formKey.currentState?.validate() == false) return;
+  void login() async {
+    if (formKey.currentState?.validate() == false) return;
+    try{
+      UIUtils.showLoadingDialog(context);
+    UserCredential userCredential =  await  FirebaseService.login(emailController.text, passwordController.text);
+  UserModel.currentUser = await  FirebaseService.getUserFromFirestore(userCredential.user!.uid);
+
+
+   UIUtils.hideDialog(context);
+      Navigator.pushReplacementNamed(context, RoutesManager.mainLayout, );
+    }on FirebaseAuthException catch(exception){
+      UIUtils.hideDialog(context);
+      UIUtils.showMessage(context, FirebaseConstants.invalidEmailOrPasswordMessage);
+    }catch(exception){
+      UIUtils.hideDialog(context);
+      UIUtils.showMessage(context, FirebaseConstants.failedToLogin);
+    }
   }
 }

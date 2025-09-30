@@ -51,72 +51,74 @@ class _CreateEventState extends State<CreateEvent> {
         padding: const EdgeInsets.all(8.0),
         child: Form(
           key: formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(22),
-                child: Image.asset(ImageAssets.meeting),
-              ),
-              SizedBox(height: 16.h),
-              CustomTabBar(
-                categories: CategoryModel.getCategories(context),
-                selectedBgColor: ColorsManager.blue,
-                selectedFgColor: ColorsManager.white,
-                unSelectedBgColor: Colors.transparent,
-                unSelectedFgColor: ColorsManager.blue,
-              ),
-              SizedBox(height: 16.h),
-              Text(
-                appLocalizations.title, style: Theme.of(context).textTheme.titleMedium,),
-            SizedBox(height: 8.h,),
-              CustomTextFormField(hintText: appLocalizations.event_title,
-                  prefixIcon: Icons.edit_note,
-                  validator: (input){
-                if(input == null || input.trim().isEmpty){
-                  return "Plz, enter event title";
-                }
-                return null;
-              }, controller: titleController),
-              SizedBox(height: 16.h),
-              Text(appLocalizations.description, style: Theme.of(context).textTheme.titleMedium,),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(22),
+                  child: Image.asset(ImageAssets.meeting),
+                ),
+                SizedBox(height: 16.h),
+                CustomTabBar(
+                  categories: CategoryModel.getCategories(context),
+                  selectedBgColor: ColorsManager.blue,
+                  selectedFgColor: ColorsManager.white,
+                  unSelectedBgColor: Colors.transparent,
+                  unSelectedFgColor: ColorsManager.blue,
+                ),
+                SizedBox(height: 16.h),
+                Text(
+                  appLocalizations.title, style: Theme.of(context).textTheme.titleMedium,),
               SizedBox(height: 8.h,),
-              CustomTextFormField(
-                  maxLines: 4,
-                  hintText: appLocalizations.event_description, validator: (input){
-                if(input == null || input.trim().isEmpty){
-                  return "Plz, enter event description";
-                }
-                return null;
-              }, controller: descriptionController),
-              SizedBox(height: 16,),
-              Row(
-                children: [
-                  Icon(Icons.date_range,color: themeProvider.isDarkEnabled ? ColorsManager.ofWhite : ColorsManager.black,),
-                  SizedBox(width: 4,),
-                  Text(selectedDate.toFormattedDate, style: Theme.of(context).textTheme.headlineMedium,),
-                Spacer(),
-                CustomTextButton(text: appLocalizations.choose_date, onTap: _selectEventDate)
-
-                ],
-              ),
-              SizedBox(height: 18.h,),
-              Row(
-                children: [
-                  Icon(Icons.access_time,color: themeProvider.isDarkEnabled ? ColorsManager.ofWhite : ColorsManager.black, ),
-                  SizedBox(width: 4,),
-                  Text(selectedDate.toFormattedTime, style: Theme.of(context).textTheme.headlineMedium,),
-                Spacer(),
-                CustomTextButton(text: appLocalizations.choose_time, onTap:_selectEventTime )
-
-                ],
-              ),
-              SizedBox(height: 40.h,),
-              CustomElevatedButton(
-
-                  text: appLocalizations.add_event, onPress: _createEvent)
-
-            ],
+                CustomTextFormField(hintText: appLocalizations.event_title,
+                    prefixIcon: Icons.edit_note,
+                    validator: (input){
+                  if(input == null || input.trim().isEmpty){
+                    return "Plz, enter event title";
+                  }
+                  return null;
+                }, controller: titleController),
+                SizedBox(height: 16.h),
+                Text(appLocalizations.description, style: Theme.of(context).textTheme.titleMedium,),
+                SizedBox(height: 8.h,),
+                CustomTextFormField(
+                    maxLines: 4,
+                    hintText: appLocalizations.event_description, validator: (input){
+                  if(input == null || input.trim().isEmpty){
+                    return "Plz, enter event description";
+                  }
+                  return null;
+                }, controller: descriptionController),
+                SizedBox(height: 16,),
+                Row(
+                  children: [
+                    Icon(Icons.date_range,color: themeProvider.isDarkEnabled ? ColorsManager.ofWhite : ColorsManager.black,),
+                    SizedBox(width: 4,),
+                    Text(selectedDate.toFormattedDate, style: Theme.of(context).textTheme.headlineMedium,),
+                  Spacer(),
+                  CustomTextButton(text: appLocalizations.choose_date, onTap: _selectEventDate)
+            
+                  ],
+                ),
+                SizedBox(height: 18.h,),
+                Row(
+                  children: [
+                    Icon(Icons.access_time,color: themeProvider.isDarkEnabled ? ColorsManager.ofWhite : ColorsManager.black, ),
+                    SizedBox(width: 4,),
+                    Text(selectedDate.toFormattedTime, style: Theme.of(context).textTheme.headlineMedium,),
+                  Spacer(),
+                  CustomTextButton(text: appLocalizations.choose_time, onTap:_selectEventTime )
+            
+                  ],
+                ),
+                SizedBox(height: 40.h,),
+                CustomElevatedButton(
+            
+                    text: appLocalizations.add_event, onPress: _createEvent)
+            
+              ],
+            ),
           ),
         ),
       ),
