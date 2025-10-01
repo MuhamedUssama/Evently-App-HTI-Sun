@@ -21,25 +21,27 @@ class ThemeManager {
     ),
     scaffoldBackgroundColor: ColorsManager.whiteBlue,
 
-      bottomNavigationBarTheme: BottomNavigationBarThemeData(
-  backgroundColor: Colors.transparent,
-  elevation: 0,
-  type: BottomNavigationBarType.fixed,
-  selectedItemColor: ColorsManager.white,
-  unselectedItemColor: ColorsManager.white
-),
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      type: BottomNavigationBarType.fixed,
+      selectedItemColor: ColorsManager.white,
+      unselectedItemColor: ColorsManager.white,
+    ),
 
-      bottomAppBarTheme: BottomAppBarTheme(
-        color: ColorsManager.blue,
-        shape: CircularNotchedRectangle()
-      ),
+    bottomAppBarTheme: BottomAppBarThemeData(
+      color: ColorsManager.blue,
+      shape: CircularNotchedRectangle(),
+    ),
 
-      floatingActionButtonTheme: FloatingActionButtonThemeData(
-        backgroundColor: ColorsManager.blue,
-        foregroundColor: ColorsManager.white,
-        shape: StadiumBorder(side: BorderSide(color: ColorsManager.white, width: 4))
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      backgroundColor: ColorsManager.blue,
+      foregroundColor: ColorsManager.white,
+      shape: StadiumBorder(
+        side: BorderSide(color: ColorsManager.white, width: 4),
       ),
-      inputDecorationTheme: InputDecorationTheme(
+    ),
+    inputDecorationTheme: InputDecorationTheme(
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(16.r),
         borderSide: BorderSide(width: 1.w, color: ColorsManager.grey),
@@ -62,25 +64,24 @@ class ThemeManager {
         color: ColorsManager.grey,
         fontWeight: FontWeight.w500,
       ),
-          hintStyle: GoogleFonts.inter(fontSize: 16.sp, fontWeight: FontWeight.w500, color: ColorsManager.black),
+      hintStyle: GoogleFonts.inter(
+        fontSize: 16.sp,
+        fontWeight: FontWeight.w500,
+        color: ColorsManager.black,
+      ),
 
-          prefixIconColor: ColorsManager.grey,
-      suffixIconColor: ColorsManager.grey
+      prefixIconColor: ColorsManager.grey,
+      suffixIconColor: ColorsManager.grey,
     ),
-   cardTheme: CardThemeData(
-     color: Colors.white
-   ),
+    cardTheme: CardThemeData(color: Colors.white),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         padding: REdgeInsets.symmetric(vertical: 16),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         backgroundColor: ColorsManager.blue,
         foregroundColor: ColorsManager.white,
-      )
+      ),
     ),
-
 
     textTheme: TextTheme(
       headlineSmall: GoogleFonts.inter(
@@ -98,122 +99,150 @@ class ThemeManager {
         color: ColorsManager.white,
         fontWeight: FontWeight.bold,
       ),
-      labelSmall: GoogleFonts.inter(fontSize: 14.sp, fontWeight: FontWeight.bold, color: ColorsManager.blue),
-labelMedium: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 20.sp, color: ColorsManager.black)
-    ,titleSmall: GoogleFonts.inter(
-    fontSize: 14.sp,
-      color: ColorsManager.black,
-      fontWeight: FontWeight.bold,
+      labelSmall: GoogleFonts.inter(
+        fontSize: 14.sp,
+        fontWeight: FontWeight.bold,
+        color: ColorsManager.blue,
+      ),
+      labelMedium: GoogleFonts.inter(
+        fontWeight: FontWeight.bold,
+        fontSize: 20.sp,
+        color: ColorsManager.black,
+      ),
+      titleSmall: GoogleFonts.inter(
+        fontSize: 14.sp,
+        color: ColorsManager.black,
+        fontWeight: FontWeight.bold,
+      ),
+      titleMedium: GoogleFonts.inter(
+        fontSize: 16.sp,
+        fontWeight: FontWeight.w500,
+        color: ColorsManager.black,
+      ),
+      bodySmall: GoogleFonts.inter(
+        fontSize: 16.sp,
+        fontWeight: FontWeight.w500,
+        color: ColorsManager.black,
+      ),
     ),
-      titleMedium: GoogleFonts.inter(fontSize: 16.sp, fontWeight: FontWeight.w500, color: ColorsManager.black)
-    ,bodySmall: GoogleFonts.inter(fontSize: 16.sp,fontWeight: FontWeight.w500, color: ColorsManager.black)
-
-    )
-
-
   );
   static final ThemeData dark = ThemeData(
-      useMaterial3: false,
+    useMaterial3: false,
 
-      primaryColor: ColorsManager.darkBlue,
-      iconTheme: IconThemeData(color: ColorsManager.ofWhite),
-      appBarTheme: AppBarTheme(
-        backgroundColor: ColorsManager.darkBlue,
-        foregroundColor: ColorsManager.blue,
-        titleTextStyle: TextStyle(
-          fontSize: 22,
-          color: ColorsManager.blue,
-          fontWeight: FontWeight.w400,
-        ),
-        centerTitle: true,
+    primaryColor: ColorsManager.darkBlue,
+    iconTheme: IconThemeData(color: ColorsManager.ofWhite),
+    appBarTheme: AppBarTheme(
+      backgroundColor: ColorsManager.darkBlue,
+      foregroundColor: ColorsManager.blue,
+      titleTextStyle: TextStyle(
+        fontSize: 22,
+        color: ColorsManager.blue,
+        fontWeight: FontWeight.w400,
       ),
-      scaffoldBackgroundColor: ColorsManager.darkBlue,
-      bottomNavigationBarTheme: BottomNavigationBarThemeData(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          type: BottomNavigationBarType.fixed,
-          selectedItemColor: ColorsManager.ofWhite,
-          unselectedItemColor: ColorsManager.ofWhite
-      ),
+      centerTitle: true,
+    ),
+    scaffoldBackgroundColor: ColorsManager.darkBlue,
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      type: BottomNavigationBarType.fixed,
+      selectedItemColor: ColorsManager.ofWhite,
+      unselectedItemColor: ColorsManager.ofWhite,
+    ),
 
-      bottomAppBarTheme: BottomAppBarTheme(
-          color: ColorsManager.darkBlue,
-          shape: CircularNotchedRectangle()
-      ),
+    bottomAppBarTheme: BottomAppBarThemeData(
+      color: ColorsManager.darkBlue,
+      shape: CircularNotchedRectangle(),
+    ),
 
-      floatingActionButtonTheme: FloatingActionButtonThemeData(
-          backgroundColor: ColorsManager.darkBlue,
-          foregroundColor: ColorsManager.ofWhite,
-          shape: StadiumBorder(side: BorderSide(color: ColorsManager.ofWhite, width: 4))
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      backgroundColor: ColorsManager.darkBlue,
+      foregroundColor: ColorsManager.ofWhite,
+      shape: StadiumBorder(
+        side: BorderSide(color: ColorsManager.ofWhite, width: 4),
       ),
-      inputDecorationTheme: InputDecorationTheme(
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16.r),
-            borderSide: BorderSide(width: 1.w, color: ColorsManager.blue),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16.r),
-            borderSide: BorderSide(width: 1.w, color: ColorsManager.blue),
-          ),
-          errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16.r),
-            borderSide: BorderSide(width: 1.w, color: ColorsManager.red),
-          ),
-          focusedErrorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(16.r),
-            borderSide: BorderSide(width: 1.w, color: ColorsManager.red),
-          ),
-hintStyle: GoogleFonts.inter(fontSize: 16.sp, fontWeight: FontWeight.w500, color: ColorsManager.ofWhite),
-        labelStyle: GoogleFonts.inter(
-            fontSize: 16.sp,
-            color: ColorsManager.white,
-            fontWeight: FontWeight.w500,
-          ),
-          prefixIconColor: ColorsManager.white,
-          suffixIconColor: ColorsManager.white
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16.r),
+        borderSide: BorderSide(width: 1.w, color: ColorsManager.blue),
       ),
-      cardTheme: CardThemeData(
-          color: ColorsManager.darkBlue
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16.r),
+        borderSide: BorderSide(width: 1.w, color: ColorsManager.blue),
       ),
-      elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            padding: REdgeInsets.symmetric(vertical: 16),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
-            ),
-            backgroundColor: ColorsManager.blue,
-            foregroundColor: ColorsManager.white,
-          )
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16.r),
+        borderSide: BorderSide(width: 1.w, color: ColorsManager.red),
       ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16.r),
+        borderSide: BorderSide(width: 1.w, color: ColorsManager.red),
+      ),
+      hintStyle: GoogleFonts.inter(
+        fontSize: 16.sp,
+        fontWeight: FontWeight.w500,
+        color: ColorsManager.ofWhite,
+      ),
+      labelStyle: GoogleFonts.inter(
+        fontSize: 16.sp,
+        color: ColorsManager.white,
+        fontWeight: FontWeight.w500,
+      ),
+      prefixIconColor: ColorsManager.white,
+      suffixIconColor: ColorsManager.white,
+    ),
+    cardTheme: CardThemeData(color: ColorsManager.darkBlue),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        padding: REdgeInsets.symmetric(vertical: 16),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        backgroundColor: ColorsManager.blue,
+        foregroundColor: ColorsManager.white,
+      ),
+    ),
 
-
-      textTheme: TextTheme(
-          headlineSmall: GoogleFonts.inter(
-            fontSize: 14,
-            color: ColorsManager.white,
-            fontWeight: FontWeight.w400,
-          ),
-          headlineMedium: GoogleFonts.inter(
-            fontSize: 18,
-            color: ColorsManager.ofWhite,
-            fontWeight: FontWeight.w500,
-          ),
-          headlineLarge: GoogleFonts.inter(
-            fontSize: 24.sp,
-            color: ColorsManager.white,
-            fontWeight: FontWeight.bold,
-          ),
-          labelSmall: GoogleFonts.inter(fontSize: 14.sp, fontWeight: FontWeight.bold, color: ColorsManager.blue),
-          labelMedium: GoogleFonts.inter(fontWeight: FontWeight.bold, fontSize: 20.sp, color: ColorsManager.ofWhite)
-          ,titleSmall: GoogleFonts.inter(
+    textTheme: TextTheme(
+      headlineSmall: GoogleFonts.inter(
+        fontSize: 14,
+        color: ColorsManager.white,
+        fontWeight: FontWeight.w400,
+      ),
+      headlineMedium: GoogleFonts.inter(
+        fontSize: 18,
+        color: ColorsManager.ofWhite,
+        fontWeight: FontWeight.w500,
+      ),
+      headlineLarge: GoogleFonts.inter(
+        fontSize: 24.sp,
+        color: ColorsManager.white,
+        fontWeight: FontWeight.bold,
+      ),
+      labelSmall: GoogleFonts.inter(
+        fontSize: 14.sp,
+        fontWeight: FontWeight.bold,
+        color: ColorsManager.blue,
+      ),
+      labelMedium: GoogleFonts.inter(
+        fontWeight: FontWeight.bold,
+        fontSize: 20.sp,
+        color: ColorsManager.ofWhite,
+      ),
+      titleSmall: GoogleFonts.inter(
         fontSize: 14.sp,
         color: ColorsManager.ofWhite,
         fontWeight: FontWeight.bold,
       ),
-          titleMedium: GoogleFonts.inter(fontSize: 16.sp, fontWeight: FontWeight.w500, color: ColorsManager.ofWhite)
-          ,bodySmall: GoogleFonts.inter(fontSize: 16.sp,fontWeight: FontWeight.w500, color: ColorsManager.white)
-
-
-      )
+      titleMedium: GoogleFonts.inter(
+        fontSize: 16.sp,
+        fontWeight: FontWeight.w500,
+        color: ColorsManager.ofWhite,
+      ),
+      bodySmall: GoogleFonts.inter(
+        fontSize: 16.sp,
+        fontWeight: FontWeight.w500,
+        color: ColorsManager.white,
+      ),
+    ),
   );
 }
