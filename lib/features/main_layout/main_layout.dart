@@ -1,57 +1,65 @@
-import 'package:evently_hti_sun/core/resources/colors_manager.dart';
 import 'package:evently_hti_sun/core/resources/routes_manager.dart';
 import 'package:evently_hti_sun/features/main_layout/favourite/favourite_tab.dart';
 import 'package:evently_hti_sun/features/main_layout/home/home_tab.dart';
 import 'package:evently_hti_sun/features/main_layout/map/map_tab.dart';
+import 'package:evently_hti_sun/features/main_layout/map/provider/map_tab_provider.dart';
 import 'package:evently_hti_sun/features/main_layout/profile/profile_tab.dart';
 import 'package:evently_hti_sun/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 class MainLayout extends StatefulWidget {
-  MainLayout({super.key});
+  const MainLayout({super.key});
 
   @override
   State<MainLayout> createState() => _MainLayoutState();
 }
 
 class _MainLayoutState extends State<MainLayout> {
-  List<Widget> tabs = [HomeTab(), MapTab(), FavouriteTab(), ProfileTab()];
+  List<Widget> tabs = [
+    HomeTab(),
+    ChangeNotifierProvider(
+      create: (context) => MapTabProvider(),
+      child: MapTab(),
+    ),
+    FavouriteTab(),
+    ProfileTab(),
+  ];
 
   int selectedIndex = 0;
-   AppLocalizations? appLocalizations;
+  AppLocalizations? appLocalizations;
 
   @override
   Widget build(BuildContext context) {
-appLocalizations = AppLocalizations.of(context);
+    appLocalizations = AppLocalizations.of(context);
     return Scaffold(
-
-     extendBody: true,
+      extendBody: true,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton:_buildFab(),
+      floatingActionButton: _buildFab(),
       body: tabs[selectedIndex],
-      bottomNavigationBar: _buildBottomNavBar()
+      bottomNavigationBar: _buildBottomNavBar(),
     );
   }
-  Widget _buildFab(){
-    return  FloatingActionButton(
-      onPressed: (){
-        Navigator.pushNamed(context, RoutesManager.createEvent);
-      }, child: Icon(Icons.add),);
-  }
-  Widget _buildBottomNavBar(){
-    return BottomAppBar(
 
+  Widget _buildFab() {
+    return FloatingActionButton(
+      onPressed: () {
+        Navigator.pushNamed(context, RoutesManager.createEvent);
+      },
+      child: Icon(Icons.add),
+    );
+  }
+
+  Widget _buildBottomNavBar() {
+    return BottomAppBar(
       notchMargin: 8,
       child: BottomNavigationBar(
-
         currentIndex: selectedIndex,
-        onTap:_onTap,
+        onTap: _onTap,
         items: [
           BottomNavigationBarItem(
             icon: Icon(selectedIndex == 0 ? Icons.home : Icons.home_outlined),
-            label:appLocalizations!.home,
+            label: appLocalizations!.home,
           ),
           BottomNavigationBarItem(
             icon: Icon(
@@ -80,7 +88,7 @@ appLocalizations = AppLocalizations.of(context);
     );
   }
 
-  void _onTap(int newIndex){
+  void _onTap(int newIndex) {
     setState(() {
       selectedIndex = newIndex;
     });
